@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wright Touch Quote</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8e8e8;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #90EE90;
+            color: black;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #90EE90;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #90EE90;
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #7FDD7F;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .quote-result {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .quote-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #90EE90;
+        }
+
+        .quote-details {
+            margin-bottom: 20px;
+        }
+
+        .quote-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quote-line.total {
+            font-weight: bold;
+            font-size: 1.2em;
+            border-top: 2px solid #90EE90;
+            border-bottom: 2px solid #90EE90;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Wright Touch Quote</h1>
+        </div>
+
+        <form id="quoteForm">
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="customerName">Customer Name:</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cell">Cell:</label>
+                    <input type="tel" id="cell" name="cell" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type of Property:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="apartment" name="propertyType" value="apartment" required>
+                            <label for="apartment">Apartment</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="townhouse" name="propertyType" value="townhouse">
+                            <label for="townhouse">Townhouse</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="house" name="propertyType" value="house">
+                            <label for="house">House</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="business" name="propertyType" value="business">
+                            <label for="business">Business</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ratePerSqm">Rate per Square Meter (R):</label>
+                    <input type="number" id="ratePerSqm" name="ratePerSqm" value="8" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rateCarpetClean">Rate per Carpet Clean (R):</label>
+                    <input type="number" id="rateCarpetClean" name="rateCarpetClean" value="50" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ratePerWindow">Rate per Window (R):</label>
+                    <input type="number" id="ratePerWindow" name="ratePerWindow" value="20" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="squareMeters">Square Meters:</label>
+                    <input type="number" id="squareMeters" name="squareMeters" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kitchen">Kitchen:</label>
+                    <input type="text" id="kitchen" name="kitchen">
+                </div>
+
+                <div class="form-group">
+                    <label for="bedrooms">Number of Bedrooms:</label>
+                    <select id="bedrooms" name="bedrooms" required>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="carpetRooms">Rooms with Carpets:</label>
+                    <select id="carpetRooms" name="carpetRooms" required>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="windows">Number of Windows:</label>
+                    <select id="windows" name="windows" required>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Window Accessibility:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="ground" name="windowAccess" value="ground" required>
+                            <label for="ground">Ground</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="step" name="windowAccess" value="step">
+                            <label for="step">Step</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="ladder" name="windowAccess" value="ladder">
+                            <label for="ladder">Ladder</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Removal of Rubbish:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="none" name="rubbishRemoval" value="none" required>
+                            <label for="none">None</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="small" name="rubbishRemoval" value="small">
+                            <label for="small">Small</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="skip" name="rubbishRemoval" value="skip">
+                            <label for="skip">Skip</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skipHireRate">Rate for Skip Hire (R):</label>
+                    <input type="number" id="skipHireRate" name="skipHireRate" value="1000" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Travel:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="travel5" name="travel" value="less5" required>
+                            <label for="travel5">Less than 5 km</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="travel15" name="travel" value="less15">
+                            <label for="travel15">Less than 15 km</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="travelMore" name="travel" value="more15">
+                            <label for="travelMore">More than 15 km</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">SUBMIT</button>
+                <button type="button" class="btn" onclick="clearForm()">CLEAR</button>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            Quote copied to clipboard successfully!
+        </div>
+
+        <div class="quote-result" id="quoteResult">
+            <div class="quote-header">
+                <h2>The Wright Touch – Quote</h2>
+                <p id="quoteDate"></p>
+            </div>
+            
+            <div class="quote-details">
+                <div><strong>For:</strong> <span id="resultCustomerName"></span></div>
+                <div><strong>Cell:</strong> <span id="resultCell"></span></div>
+                <div><strong>Address:</strong> <span id="resultAddress"></span></div>
+            </div>
+
+            <h3>Cleaning Quotation</h3>
+            <div class="quote-line">
+                <span>General cleaning</span>
+                <span id="resultGeneralCleaning">R 0.00</span>
+            </div>
+            <div class="quote-line">
+                <span>Windows</span>
+                <span id="resultWindows">R 0.00</span>
+            </div>
+            <div class="quote-line">
+                <span>Cupboard clearing</span>
+                <span id="resultCupboard">R 0.00</span>
+            </div>
+            <div class="quote-line">
+                <span>Carpet cleaning</span>
+                <span id="resultCarpet">R 0.00</span>
+            </div>
+            <div class="quote-line">
+                <span>Rubbish Removal</span>
+                <span id="resultRubbish">R 0.00</span>
+            </div>
+            <div class="quote-line">
+                <span>Travel</span>
+                <span id="resultTravel">R 0.00</span>
+            </div>
+            <div class="quote-line total">
+                <span>Total Quotation</span>
+                <span id="resultTotal">R 0.00</span>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn" onclick="copyQuote()">COPY</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateQuote();
+        });
+
+        function calculateQuote() {
+            // Get form values
+            const customerName = document.getElementById('customerName').value;
+            const address = document.getElementById('address').value;
+            const cell = document.getElementById('cell').value;
+            const ratePerSqm = parseFloat(document.getElementById('ratePerSqm').value);
+            const rateCarpetClean = parseFloat(document.getElementById('rateCarpetClean').value);
+            const ratePerWindow = parseFloat(document.getElementById('ratePerWindow').value);
+            const squareMeters = parseFloat(document.getElementById('squareMeters').value);
+            const bedrooms = parseInt(document.getElementById('bedrooms').value);
+            const carpetRooms = parseInt(document.getElementById('carpetRooms').value);
+            const windows = parseInt(document.getElementById('windows').value);
+            const windowAccess = document.querySelector('input[name="windowAccess"]:checked').value;
+            const rubbishRemoval = document.querySelector('input[name="rubbishRemoval"]:checked').value;
+            const skipHireRate = parseFloat(document.getElementById('skipHireRate').value);
+            const travel = document.querySelector('input[name="travel"]:checked').value;
+
+            // Calculate components
+            const A = ratePerSqm * squareMeters; // General cleaning
+            let B = ratePerWindow * windows; // Windows
+            
+            // Add accessibility charges to windows
+            if (windowAccess === 'step') {
+                B += 20;
+            } else if (windowAccess === 'ladder') {
+                B += 100;
+            }
+
+            const C = bedrooms * 150 + 150; // Cupboard clearing
+            const D = rateCarpetClean * carpetRooms; // Carpet cleaning
+
+            // Rubbish removal
+            let E = 0;
+            if (rubbishRemoval === 'small') {
+                E = 200;
+            } else if (rubbishRemoval === 'skip') {
+                E = skipHireRate;
+            }
+
+            // Travel costs
+            let F = 0;
+            if (travel === 'less15') {
+                F = 100;
+            } else if (travel === 'more15') {
+                F = 200;
+            }
+
+            const G = A + B + C + D + E + F; // Total
+
+            // Display results
+            const currentDate = new Date().toLocaleDateString();
+            document.getElementById('quoteDate').textContent = `Date: ${currentDate}`;
+            document.getElementById('resultCustomerName').textContent = customerName;
+            document.getElementById('resultCell').textContent = cell;
+            document.getElementById('resultAddress').textContent = address;
+            document.getElementById('resultGeneralCleaning').textContent = `R ${A.toFixed(2)}`;
+            document.getElementById('resultWindows').textContent = `R ${B.toFixed(2)}`;
+            document.getElementById('resultCupboard').textContent = `R ${C.toFixed(2)}`;
+            document.getElementById('resultCarpet').textContent = `R ${D.toFixed(2)}`;
+            document.getElementById('resultRubbish').textContent = `R ${E.toFixed(2)}`;
+            document.getElementById('resultTravel').textContent = `R ${F.toFixed(2)}`;
+            document.getElementById('resultTotal').textContent = `R ${G.toFixed(2)}`;
+
+            document.getElementById('quoteResult').style.display = 'block';
+            document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyQuote() {
+            const customerName = document.getElementById('resultCustomerName').textContent;
+            const cell = document.getElementById('resultCell').textContent;
+            const address = document.getElementById('resultAddress').textContent;
+            const date = document.getElementById('quoteDate').textContent;
+            const generalCleaning = document.getElementById('resultGeneralCleaning').textContent;
+            const windows = document.getElementById('resultWindows').textContent;
+            const cupboard = document.getElementById('resultCupboard').textContent;
+            const carpet = document.getElementById('resultCarpet').textContent;
+            const rubbish = document.getElementById('resultRubbish').textContent;
+            const travel = document.getElementById('resultTravel').textContent;
+            const total = document.getElementById('resultTotal').textContent;
+
+            const quoteText = `The Wright Touch – Quote
+${date}
+
+For: ${customerName}
+Cell: ${cell}
+Address: ${address}
+
+Cleaning Quotation
+• General cleaning – ${generalCleaning}
+• Windows – ${windows}
+• Cupboard clearing – ${cupboard}
+• Carpet cleaning – ${carpet}
+• Rubbish Removal – ${rubbish}
+• Travel – ${travel}
+• Total Quotation – ${total}`;
+
+            navigator.clipboard.writeText(quoteText).then(function() {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            }).catch(function() {
+                alert('Failed to copy to clipboard. Please try again.');
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('quoteForm').reset();
+            
+            // Reset preset values
+            document.getElementById('ratePerSqm').value = '8';
+            document.getElementById('rateCarpetClean').value = '50';
+            document.getElementById('ratePerWindow').value = '20';
+            document.getElementById('skipHireRate').value = '1000';
+            
+            // Hide quote result
+            document.getElementById('quoteResult').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
